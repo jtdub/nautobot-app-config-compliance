@@ -1,0 +1,26 @@
+{
+    "cookiecutter": {
+        "codeowner_github_usernames": "jtdub",
+        "full_name": "James Williams",
+        "email": "thedude@jtdub.com",
+        "github_org": "jtdub",
+        "app_name": "config_compliance",
+        "verbose_name": "Config Compliance",
+        "app_slug": "config-compliance",
+        "project_slug": "nautobot-app-config-compliance",
+        "repo_url": "https://github.com/jtdub/nautobot-app-config-compliance",
+        "base_url": "config-compliance",
+        "min_nautobot_version": "2.0.0",
+        "max_nautobot_version": "2.9999",
+        "camel_name": "ConfigCompliance",
+        "project_short_description": "Config Compliance",
+        "model_class_name": "ConfigComplianceModel",
+        "open_source_license": "Apache-2.0",
+        "docs_base_url": "https://docs.nautobot.com",
+        "docs_app_url": "https://docs.nautobot.com/projects/config-compliance/en/latest",
+        "_template": "cookiecutter-nautobot-app/nautobot-app",
+        "_output_dir": "/Users/jtdub/Documents/code",
+        "_repo_dir": "cookiecutter-nautobot-app/nautobot-app",
+        "_checkout": null
+    }
+}
