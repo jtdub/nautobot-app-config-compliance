@@ -5,7 +5,7 @@ from nautobot.apps.ui import NavMenuAddButton, NavMenuGroup, NavMenuItem, NavMen
 items = (
     NavMenuItem(
         link="plugins:config_compliance:configcompliancemodel_list",
-        name="Config Compliance",
+        name="Custom Compliance",
         permissions=["config_compliance.view_configcompliancemodel"],
         buttons=(
             NavMenuAddButton(
@@ -14,11 +14,22 @@ items = (
             ),
         ),
     ),
+    NavMenuItem(
+        link="plugins:config_compliance:configcompliancerulemodel_list",
+        name="Compliance Rules",
+        permissions=["config_compliance.view_configcompliancerulemodel"],
+        buttons=(
+            NavMenuAddButton(
+                link="plugins:config_compliance:configcompliancerulemodel_add",
+                permissions=["config_compliance.add_configcompliancerulemodel"],
+            ),
+        ),
+    ),
 )
 
 menu_items = (
     NavMenuTab(
-        name="Apps",
+        name="Golden Config",
         groups=(NavMenuGroup(name="Config Compliance", items=tuple(items)),),
     ),
 )

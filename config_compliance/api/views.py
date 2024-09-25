@@ -15,3 +15,14 @@ class ConfigComplianceModelViewSet(NautobotModelViewSet):  # pylint: disable=too
 
     # Option for modifying the default HTTP methods:
     # http_method_names = ["get", "post", "put", "patch", "delete", "head", "options", "trace"]
+
+
+class ConfigComplianceRuleModelViewSet(NautobotModelViewSet):  # pylint: disable=too-many-ancestors
+    """ConfigComplianceRuleModel viewset."""
+
+    queryset = models.ConfigComplianceRuleModel.objects.all()
+    serializer_class = serializers.ConfigComplianceRuleModelSerializer
+    filterset_class = filters.ConfigComplianceRuleModelFilterSet
+
+    # Option for modifying the default HTTP methods:
+    # http_method_names = ["get", "post", "put", "patch", "delete", "head", "options", "trace"]

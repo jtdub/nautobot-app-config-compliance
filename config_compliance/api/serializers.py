@@ -16,3 +16,16 @@ class ConfigComplianceModelSerializer(NautobotModelSerializer, TaggedModelSerial
 
         # Option for disabling write for certain fields:
         # read_only_fields = []
+
+
+class ConfigComplianceRuleModelSerializer(NautobotModelSerializer, TaggedModelSerializerMixin):  # pylint: disable=too-many-ancestors
+    """ConfigComplianceRuleModel Serializer."""
+
+    class Meta:
+        """Meta attributes."""
+
+        model = models.ConfigComplianceRuleModel
+        fields = "__all__"
+
+        # Option for disabling write for certain fields:
+        # read_only_fields = []

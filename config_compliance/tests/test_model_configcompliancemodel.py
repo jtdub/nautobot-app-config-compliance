@@ -17,6 +17,8 @@ class TestConfigComplianceModel(TestCase):
 
     def test_create_configcompliancemodel_all_fields_success(self):
         """Create ConfigComplianceModel with all fields."""
-        configcompliancemodel = models.ConfigComplianceModel.objects.create(name="Development", description="Development Test")
+        configcompliancemodel = models.ConfigComplianceModel.objects.create(
+            name="Development", description="Development Test"
+        )
         self.assertEqual(configcompliancemodel.name, "Development")
         self.assertEqual(configcompliancemodel.description, "Development Test")

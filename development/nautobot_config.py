@@ -127,7 +127,42 @@ if not _TESTING:
 #
 
 # Enable installed Apps. Add the name of each App to the list.
-PLUGINS = ["config_compliance"]
+PLUGINS = ["config_compliance", "nautobot_golden_config", "nautobot_plugin_nornir"]
+PLUGINS_CONFIG = {
+    "nautobot_plugin_nornir": {
+        "nornir_settings": {
+            "credentials": "nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars",
+            "runner": {
+                "plugin": "threaded",
+                "options": {
+                    "num_workers": 20,
+                },
+            },
+        },
+    },
+    "nautobot_golden_config": {
+        "per_feature_bar_width": 0.15,
+        "per_feature_width": 13,
+        "per_feature_height": 4,
+        "enable_backup": True,
+        "enable_compliance": True,
+        "enable_intended": True,
+        "enable_sotagg": True,
+        "enable_plan": True,
+        "enable_deploy": True,
+        "enable_postprocessing": False,
+        "sot_agg_transposer": None,
+        "postprocessing_callables": [],
+        "postprocessing_subscribed": [],
+        "jinja_env": {
+            "undefined": "jinja2.StrictUndefined",
+            "trim_blocks": True,
+            "lstrip_blocks": False,
+        },
+        # "default_deploy_status": "Not Approved",
+        # "get_custom_compliance": "my.custom_compliance.func"
+    },
+}
 
 # Apps configuration settings. These settings are used by various Apps that the user may have installed.
 # Each key in the dictionary is the name of an installed App and its value is a dictionary of settings.
