@@ -72,7 +72,6 @@ class ConfigComplianceRuleModel(PrimaryModel):  # pylint: disable=too-many-ances
 
     def evaluate(self, config):
         """Evaluate rule based on provided config text."""
-
         eval_text = {
             "equals": text_match.equals(self.config_text, config),
             "not_equals": not text_match.equals(self.config_text, config),
@@ -80,7 +79,7 @@ class ConfigComplianceRuleModel(PrimaryModel):  # pylint: disable=too-many-ances
             "endswith": text_match.endswith(self.config_text, config),
             "contains": text_match.contains(self.config_text, config),
             "does_not_contain": not text_match.contains(self.config_text, config),
-            "re_search": text_match.re_search(self.config_text, config)
+            "re_search": text_match.re_search(self.config_text, config),
         }
 
         return eval_text.get(self.operator)
