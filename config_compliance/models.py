@@ -57,6 +57,16 @@ class ConfigComplianceModel(PrimaryModel):  # pylint: disable=too-many-ancestors
         """Stringify instance."""
         return self.name
 
+    def evaluate_chain(self, config):
+        """Evaluate the entire chain of rules."""
+        for rule_chain_step in self.steps.all():
+            result = rule_chain_step.rule.evaluate(config)
+            if rule_chain_step.next_step and result:
+                rule_chain_step.next_step.evaluate_chain(config)
+            elif not result:
+                return False
+        return True
+
 
 class ConfigComplianceRuleModel(PrimaryModel):  # pylint: disable=too-many-ancestors
     """Rule model for Config Compliance app."""
@@ -73,13 +83,37 @@ class ConfigComplianceRuleModel(PrimaryModel):  # pylint: disable=too-many-ances
     def evaluate(self, config):
         """Evaluate rule based on provided config text."""
         eval_text = {
-            "equals": text_match.equals(self.config_text, config),
-            "not_equals": not text_match.equals(self.config_text, config),
-            "startswith": text_match.startswith(self.config_text, config),
-            "endswith": text_match.endswith(self.config_text, config),
-            "contains": text_match.contains(self.config_text, config),
-            "does_not_contain": not text_match.contains(self.config_text, config),
-            "re_search": text_match.re_search(self.config_text, config),
+            "equals": text_match.equals(config, self.config_text),
+            "not_equals": not text_match.equals(config, self.config_text),
+            "startswith": text_match.startswith(config, self.config_text),
+            "endswith": text_match.endswith(config, self.config_text),
+            "contains": text_match.contains(config, self.config_text),
+            "does_not_contain": not text_match.contains(config, self.config_text),
+            "re_search": text_match.re_search(config, self.config_text),
         }
 
         return eval_text.get(self.operator)
+
+
+class ConfigComplianceStepModel(PrimaryModel):  # pylint: disable=too-many-ancestors
+    """ConfigComplianceStep model for Config Compliance app."""
+
+    chain = models.ForeignKey(ConfigComplianceModel, on_delete=models.CASCADE)
+    rule = models.ForeignKey(ConfigComplianceRuleModel, on_delete=models.CASCADE)
+    next_step = models.ForeignKey("self", null=True, blank=True, on_delete=models.SET_NULL)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        """Meta class."""
+
+        ordering = ["order"]
+
+        # Option for fixing capitalization (i.e. "Snmp" vs "SNMP")
+        # verbose_name = "Config Compliance"
+
+        # Option for fixing plural name (i.e. "Chicken Tenders" vs "Chicken Tendies")
+        # verbose_name_plural = "Config Compliances"
+
+    def __str__(self):
+        """Stringify instance."""
+        return f"{self.chain.name} - {self.rule.name} (Step {self.order})"
